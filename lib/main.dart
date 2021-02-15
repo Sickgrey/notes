@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/resources/colors.dart';
 import 'package:notes/services/auth.dart';
 import 'package:notes/ui/landing_page.dart';
 import 'package:provider/provider.dart';
+import 'resources/colors.dart';
 
 import 'models/app_user.dart';
 

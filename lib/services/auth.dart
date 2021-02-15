@@ -33,7 +33,6 @@ class AuthService {
     await _auth.signOut();
   }
 
-  //поток изменений событий аутентификации
   Stream<AppUser> get currentUser {
     return _auth
         .authStateChanges()

@@ -22,52 +22,24 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: primary_light,
-        body: Column(
-          children: <Widget>[
-            _logo(),
-            (showLogin
-                ? Column(
-                    children: [
-                      _form(loginButton, _loginButtonAction),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: GestureDetector(
-                          child: Text(
-                            textForRegister,
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              showLogin = false;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  )
-                : Column(
-                    children: [
-                      _form(registerButton, _registerButtonAction),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: GestureDetector(
-                          child: Text(
-                            textForLogin,
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              showLogin = true;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  )),
-          ],
-        ));
+    return Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [primaryAppDark, primaryAppColor, primaryAppLight])),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              children: <Widget>[
+                _logo(),
+                (showLogin
+                    ? _buildForm(
+                        loginButton, textForLogin, _loginButtonAction, false)
+                    : _buildForm(registerButton, textForRegister,
+                        _registerButtonAction, true)),
+              ],
+            )));
   }
 
   Widget _logo() {
@@ -81,6 +53,31 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
           color: Colors.black,
         ),
       ),
+    );
+  }
+
+  Widget _buildForm(String label, String text, void func(), bool isShowLogin) {
+    return Column(
+      children: [
+        _form(label, func),
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: GestureDetector(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 20,
+                color: primaryAppDark,
+              ),
+            ),
+            onTap: () {
+              setState(() {
+                showLogin = isShowLogin;
+              });
+            },
+          ),
+        )
+      ],
     );
   }
 
@@ -123,7 +120,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
             hintStyle: TextStyle(fontSize: 20, color: Colors.black87),
             hintText: hint,
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: primary_dark, width: 3),
+              borderSide: BorderSide(color: primaryAppDark, width: 3),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black, width: 1),
@@ -142,11 +139,13 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   Widget _button(String text, void func()) {
     return RaisedButton(
         splashColor: Theme.of(context).primaryColor,
-        color: primary_dark,
+        color: primaryAppDark,
         child: Text(
           text,
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: primary_color, fontSize: 20),
+              fontWeight: FontWeight.bold,
+              color: primaryAppLight,
+              fontSize: 20),
         ),
         onPressed: func);
   }
@@ -161,7 +160,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
         _email.trim(), _password.trim());
     if (user == null) {
       Fluttertoast.showToast(
-          msg: "Can't SignIn you! Please check your email/password",
+          msg: toastMessageError,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
