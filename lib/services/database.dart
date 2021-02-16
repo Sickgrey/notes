@@ -3,18 +3,16 @@ import 'package:notes/models/note.dart';
 
 class DatabaseService {
   final CollectionReference notes =
-      FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('notes');
 
-  //Future addOrUpdateNote(Note note) async {}
+  Future addOrUpdateNote(Note note) async {
+    // TODO: create list
+    return await notes.doc(note.uid).set(note.toMap());
+  }
+
   // TODO: rebuild getNotes()
-  Stream<List<Note>> getNotes(String author) {
-    Query query;
-    if (author != null) {
-      query = notes.where('author', isEqualTo: author);
-    } else {
-      query = notes.where('isOnline', isEqualTo: true);
-    }
-    return query.snapshots().map((QuerySnapshot data) => data.docs
+  Stream<List<Note>> getNotes(String uid) {
+    return notes.snapshots().map((QuerySnapshot data) => data.docs
         .map((DocumentSnapshot doc) => Note.fromJson(doc.id, doc.data()))
         .toList());
   }
