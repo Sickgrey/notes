@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Note {
   String uid;
   String title;
@@ -11,5 +9,9 @@ class Note {
     uid = uid;
     title = data['title'];
     body = data['body'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'uid': uid, 'title': title, 'body': body};
   }
 }
