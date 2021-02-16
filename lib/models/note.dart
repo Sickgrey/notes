@@ -15,3 +15,13 @@ class Note {
     return {'uid': uid, 'title': title, 'body': body};
   }
 }
+
+class Notes {
+  List<Note> notes;
+
+  Notes({this.notes});
+
+  Map<String, dynamic> toMap() {
+    return {"notes": notes.map((n) => n.toMap()).toList()};
+  }
+}
