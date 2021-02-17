@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:notes/models/app_user.dart';
 import 'package:notes/models/note.dart';
 import 'package:notes/services/database.dart';
+//import 'package:notes/ui/home_page.dart';
 import 'package:provider/provider.dart';
 
 class AddNote extends StatefulWidget {
+  final List<Note> notes;
+  AddNote(this.notes);
   @override
-  _AddNoteState createState() => _AddNoteState();
+  _AddNoteState createState() => _AddNoteState(notes);
 }
 
 class _AddNoteState extends State<AddNote> {
   AppUser user;
-  TextEditingController title = TextEditingController();
-  TextEditingController body = TextEditingController();
+  final TextEditingController title = TextEditingController();
+  final TextEditingController body = TextEditingController();
+  List<Note> notes;
+
+  _AddNoteState(this.notes);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,13 @@ class _AddNoteState extends State<AddNote> {
 
   void _saveNote() async {
     Note note = Note(uid: user.id, title: title.text, body: body.text);
-    await DatabaseService().addOrUpdateNote(note);
+    setState(() {
+      notes.add(note);
+    });
+    //notes.add(note);
+
+    await DatabaseService().addOrUpdateNote(Notes(notes: notes), user.id);
+    print('note added');
     Navigator.of(context).pop();
   }
 }

@@ -5,5 +5,6 @@ class AppUser {
 
   AppUser.fromFirebase(User user) {
     id = user.uid;
+    print(id);
   }
 }

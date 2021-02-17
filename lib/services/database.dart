@@ -4,10 +4,12 @@ import 'package:notes/models/note.dart';
 class DatabaseService {
   final CollectionReference notes =
       FirebaseFirestore.instance.collection('notes');
+  Notes notesList;
 
-  Future addOrUpdateNote(Note note) async {
+  Future addOrUpdateNote(Notes notesList, String uid) async {
     // TODO: create list
-    return await notes.doc(note.uid).set(note.toMap());
+
+    return await notes.doc(uid).set(notesList.toMap());
   }
 
   // TODO: rebuild getNotes()

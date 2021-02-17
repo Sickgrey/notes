@@ -20,8 +20,15 @@ class Notes {
   List<Note> notes;
 
   Notes({this.notes});
-
+  /*
+  Map<String, dynamic> toMap() =>
+      notes.asMap().map((key, value) => MapEntry('$key', value));
+  */
   Map<String, dynamic> toMap() {
-    return {"notes": notes.map((n) => n.toMap()).toList()};
+    Map<String, dynamic> map = {};
+    for (int i = 0; i < notes.length; i++) {
+      map.putIfAbsent('$i', () => notes[i].toMap());
+    }
+    return map;
   }
 }
