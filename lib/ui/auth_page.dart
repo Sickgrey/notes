@@ -137,17 +137,15 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   }
 
   Widget _button(String text, void func()) {
-    return RaisedButton(
-        splashColor: Theme.of(context).primaryColor,
-        color: primaryAppDark,
-        child: Text(
-          text,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: primaryAppLight,
-              fontSize: 20),
-        ),
-        onPressed: func);
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(primary: primaryAppDark),
+      onPressed: func,
+      child: Text(
+        text,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: primaryAppLight, fontSize: 20),
+      ),
+    );
   }
 
   void _loginButtonAction() async {

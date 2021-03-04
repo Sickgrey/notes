@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    //loadData();
+    loadData();
     super.initState();
   }
 
@@ -66,11 +66,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadData() async {
+    /*
     var stream = db.getNotes(user.id);
     stream.listen((List<Note> data) {
       setState(() {
         notes = data;
       });
     });
+    */
+    //var notesFromDb = await db.getNotes(user.id);
+    setState(() {});
   }
 }

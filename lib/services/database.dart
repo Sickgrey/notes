@@ -4,18 +4,22 @@ import 'package:notes/models/note.dart';
 class DatabaseService {
   final CollectionReference notes =
       FirebaseFirestore.instance.collection('notes');
-  Notes notesList;
 
   Future addOrUpdateNote(Notes notesList, String uid) async {
-    // TODO: create list
-
     return await notes.doc(uid).set(notesList.toMap());
   }
 
   // TODO: rebuild getNotes()
+  /*
   Stream<List<Note>> getNotes(String uid) {
-    return notes.snapshots().map((QuerySnapshot data) => data.docs
-        .map((DocumentSnapshot doc) => Note.fromJson(doc.id, doc.data()))
-        .toList());
+    Query query = notes.where('uid', isEqualTo: uid);
+    var s = query.snapshots().map((QuerySnapshot data) =>
+        data.docs.map((DocumentSnapshot data) => data.data()));
+    var s = await docRef.get().then((doc) => doc.data());
+    List d = s.values.toList();
+    // List<Note>
+    var list = d.map((el) => Note.fromJson(uid, el)).toList();
+    return list;
   }
+  */
 }
